@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2 class="mb-4">Problems</h2>
+  <div class="row g-3">
+    {% for p in problems %}
+      <div class="col-md-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">{{ p.title }}</h5>
+            <p class="card-text text-truncate">{{ p.description|truncatechars:100 }}</p>
+            <a href="{% url 'problems:detail' p.pk %}" class="btn btn-outline-primary">View Problem</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>No problems available.</p>
+    {% endfor %}
+  </div>
+{% endblock %}
