@@ -9,6 +9,7 @@ from problems.models import Problem
 BASE_DIR = settings.BASE_DIR
 
 def run_code(language, code, custom_input, code_id):
+    # Determine file path for code
     if language == 'java':
         code_file = os.path.join(BASE_DIR, 'codes', 'Main.java')
     else:
@@ -31,20 +32,23 @@ def run_code(language, code, custom_input, code_id):
         # Prepare command based on language
         if language == 'py':
             cmd = ['python3', code_file]
+
         elif language == 'cpp':
             exe_file = code_file.replace('.cpp', '')
             subprocess.run(['g++', code_file, '-o', exe_file], check=True)
             cmd = [exe_file]
+
         elif language == 'c':
             exe_file = code_file.replace('.c', '')
             subprocess.run(['gcc', code_file, '-o', exe_file], check=True)
             cmd = [exe_file]
-        elif language == 'java':
-        # Compile Java
-            compile_proc = subprocess.run(['javac', code_file], capture_output=True, text=True)
 
+        elif language == 'java':
+            # Compile Java
+            compile_proc = subprocess.run(
+                ['javac', code_file], capture_output=True, text=True
+            )
             if compile_proc.returncode != 0:
-                # Compilation failed — return stderr
                 with open(output_file, 'w') as f:
                     f.write("Compilation Error:\n" + compile_proc.stderr)
                 with open(output_file, 'r') as f:
@@ -52,14 +56,17 @@ def run_code(language, code, custom_input, code_id):
 
             # Run Java
             code_dir = os.path.dirname(code_file) or '.'
-            class_name = os.path.splitext(os.path.basename(code_file))[0]
-            cmd = ['java', '-cp', code_dir, class_name]
+            cmd = ['java', '-cp', code_dir, 'Main']
+
         else:
             return "Unsupported language"
 
-        # Execute code
+        # Execute code with input redirection
         with open(input_file, 'r') as infile, open(output_file, 'w') as outfile:
-            subprocess.run(cmd, stdin=infile, stdout=outfile, stderr=outfile, timeout=5)
+            subprocess.run(
+                cmd, stdin=infile, stdout=outfile,
+                stderr=outfile, timeout=5
+            )
 
     except subprocess.TimeoutExpired:
         with open(output_file, 'w') as f:
@@ -71,11 +78,9 @@ def run_code(language, code, custom_input, code_id):
         with open(output_file, 'w') as f:
             f.write(f"Error: {str(e)}")
 
-    # Read output
+    # Read and return output
     with open(output_file, 'r') as f:
-        output = f.read()
-
-    return output
+        return f.read()
 
 
 def compile_view(request):
@@ -84,15 +89,14 @@ def compile_view(request):
         if form.is_valid():
             language = form.cleaned_data['language']
             code = form.cleaned_data['code']
-            custom_input = form.cleaned_data['custom_input']
+            custom_input = form.cleaned_data['stdin']
             code_id = str(uuid.uuid4())
 
-            # Mapping for file extensions
             ext_map = {
                 'python': 'py',
                 'cpp': 'cpp',
-                'java': 'java',  # Java not handled yet, just placeholder
-                'c': 'c'
+                'java': 'java',
+                'c': 'c',
             }
 
             output = run_code(ext_map[language], code, custom_input, code_id)
@@ -105,40 +109,47 @@ def compile_view(request):
 
 def submit_code(request, problem_id):
     problem = get_object_or_404(Problem, pk=problem_id)
+    action = request.POST.get('action')  # "run" or "submit"
 
     if request.method == 'POST':
         form = CodeSubmissionForm(request.POST)
         if form.is_valid():
-            # 1) pull form values
-            language_key = form.cleaned_data['language']   # 'cpp', 'py', ...
-            code             = form.cleaned_data['code']
-            stdin            = form.cleaned_data['stdin']
-
-            # 2) map to extension
-            ext_map = {
-                'py':  'py',
-                'cpp': 'cpp',
-                'c':   'c',
-                'java': 'java'
-            }
-            ext = ext_map[language_key]
-
-            # 3) generate a unique id for file names
+            lang = form.cleaned_data['language']
+            code = form.cleaned_data['code']
+            stdin = form.cleaned_data['stdin']
+            ext_map = {'py':'py','cpp':'cpp','c':'c','java':'java'}
+            ext = ext_map[lang]
             code_id = str(uuid.uuid4())
 
-            # 4) actually compile & run
-            output = run_code(ext, code, stdin, code_id)
+            if action == 'run':
+                output = run_code(ext, code, stdin, code_id)
+                context = {
+                    'output': output,
+                    'problem_id': problem_id,
+                    'was_run_only': True,
+                }
+                return render(request, 'output.html', context)
 
-            # 5) render the template
-            return render(request, 'output.html', {
-                'output': output,
-                'problem': problem,
-                'problem_id': problem_id,
-            })
+            elif action == 'submit':
+                testcases = problem.testcases.all()
+                results = []
+                passed = 0
+                for tc in testcases:
+                    out = run_code(ext, code, tc.input_data, code_id)
+                    ok = out.strip() == tc.expected_output.strip()
+                    results.append({'input': tc.input_data,
+                                    'expected': tc.expected_output,
+                                    'output': out,
+                                    'passed': ok})
+                    if ok: passed += 1
+                context = {
+                    'results': results,
+                    'total': len(testcases),
+                    'passed': passed,
+                }
+                return render(request, 'submission_results.html', context)
+
     else:
         form = CodeSubmissionForm()
 
-    return render(request, 'problem_detail.html', {
-        'problem': problem,
-        'form': form,
-    })
+    return render(request, 'problem_detail.html', {'problem': problem, 'form': form})

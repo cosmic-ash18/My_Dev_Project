@@ -1,0 +1,2 @@
+Compilation Error:
+Command '['g++', '/mnt/c/Users/akomm/Documents/Online_Judge_Iter1/codes/8f74b85e-3211-4709-9a34-929623549976.cpp', '-o', '/mnt/c/Users/akomm/Documents/Online_Judge_Iter1/codes/8f74b85e-3211-4709-9a34-929623549976']' returned non-zero exit status 1.

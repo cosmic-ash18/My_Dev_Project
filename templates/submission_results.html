@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card mt-4">
+  <div class="card-header bg-success text-white">
+    <h4 class="mb-0">Submission Results</h4>
+  </div>
+  <div class="card-body">
+    <p>Passed {{ passed }} of {{ total }} test cases.</p>
+    <table class="table table-striped">
+      <thead>
+        <tr><th>#</th><th>Result</th><th>Your Output</th><th>Expected</th></tr>
+      </thead>
+      <tbody>
+        {% for tc in results %}
+        <tr class="{% if tc.passed %}table-success{% else %}table-danger{% endif %}">
+          <td>{{ forloop.counter }}</td>
+          <td>{{ tc.passed|yesno:"Passed,Failed" }}</td>
+          <td><pre>{{ tc.output }}</pre></td>
+          <td><pre>{{ tc.expected }}</pre></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <a href="{% url 'problems:list' %}" class="btn btn-primary mt-3">Back to Problems</a>
+  </div>
+</div>
+{% endblock %}

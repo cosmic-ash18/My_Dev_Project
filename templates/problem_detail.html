@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-
 <div class="card mt-4">
   <div class="card-body">
     <h2>{{ problem.title }}</h2>
@@ -8,27 +7,22 @@
   </div>
 </div>
 
-<!-- Submission Form -->
 <div class="card mt-4">
   <div class="card-body">
-    <h3 class="card-title">Submit Your Solution</h3>
+    <h3 class="card-title">Your Solution</h3>
     <form method="post" action="{% url 'submit:submit_code' problem.id %}">
       {% csrf_token %}
-      <div class="mb-3">
-        {{ form.language.label_tag }}  
-        {{ form.language }}
-      </div>
-      <div class="mb-3">
-        {{ form.code.label_tag }}
-        {{ form.code }}
-      </div>
-      <div class="mb-3">
-        {{ form.stdin.label_tag }}
-        {{ form.stdin }}
-      </div>
-      <button type="submit" class="btn btn-primary">Submit Code</button>
+      <div class="mb-3"> {{ form.language.label_tag }} {{ form.language }} </div>
+      <div class="mb-3"> {{ form.code.label_tag }} {{ form.code }} </div>
+      <div class="mb-3"> {{ form.stdin.label_tag }} {{ form.stdin }} </div>
+
+      <button type="submit" name="action" value="run" class="btn btn-outline-primary">
+        Run Code
+      </button>
+      <button type="submit" name="action" value="submit" class="btn btn-success ms-2">
+        Submit
+      </button>
     </form>
   </div>
 </div>
-
 {% endblock %}
