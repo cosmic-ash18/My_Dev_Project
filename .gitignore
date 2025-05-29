@@ -10,10 +10,6 @@ __pycache__/
 # SQLite database
 db.sqlite3
 
-# Django migrations (optional: track if you want)
-**/migrations/
-!**/migrations/__init__.py
-
 # IDE and OS files
 .vscode/
 *.swp

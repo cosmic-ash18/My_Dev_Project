@@ -26,4 +26,5 @@ urlpatterns = [
     path('login/', core_views.CustomLoginView.as_view(),    name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('', include(('problems.urls', 'problems'), namespace='problems')),
+    path('submit/', include('submit.urls', namespace='submit')),
 ]

@@ -1,0 +1,2 @@
+Compilation Error:
+Command '['javac', '/mnt/c/Users/akomm/Documents/Online_Judge_Iter1/codes/5c7bbc0c-b7bb-4101-8bc6-ef881411d043.java']' returned non-zero exit status 1.

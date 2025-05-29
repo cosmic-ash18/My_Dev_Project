@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card mt-4">
+  <div class="card-header bg-primary text-white">
+    <h4 class="mb-0">Program Output</h4>
+  </div>
+  <div class="card-body">
+    <pre class="bg-light p-3 border rounded">{{ output }}</pre>
+    <a href="{% url 'submit:submit_code' problem_id %}" class="btn btn-outline-primary mt-3">Try Again</a>
+  </div>
+</div>
+{% endblock %}
