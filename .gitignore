@@ -14,3 +14,8 @@ db.sqlite3
 .vscode/
 *.swp
 .DS_Store
+
+# Ignore submission files
+codes/
+inputs/
+outputs/
