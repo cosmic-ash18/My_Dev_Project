@@ -1,4 +1,0 @@
-  File "/mnt/c/Users/akomm/Documents/Online_Judge_Iter1/codes/9c5ea58a-3535-4c1b-b04b-82e2f1bb7fa9.py", line 3
-    public class HelloWorld {
-           ^^^^^
-SyntaxError: invalid syntax

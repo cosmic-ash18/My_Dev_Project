@@ -1,2 +1,0 @@
-Error: Could not find or load main class d9e3a445-5c4b-4fef-ad14-bbfe649d5fca
-Caused by: java.lang.ClassNotFoundException: d9e3a445-5c4b-4fef-ad14-bbfe649d5fca
