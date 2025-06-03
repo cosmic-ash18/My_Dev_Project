@@ -1,6 +1,6 @@
 # 🧠 Online Judge + AI Code Assistant 🖥️
 
-Welcome to **Online Judge + AI Code Assistant**, a full-stack web application that functions as an online compiler, code runner, and judge system for popular programming languages — enhanced with AI-powered coding support.
+Welcome to **Online Judge + AI Code Assistant**, a full-stack web application that functions as an online compiler, code runner, and judge system for popular programming languages, enhanced with AI-powered coding support.
 
 ---
 
