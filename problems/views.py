@@ -11,6 +11,12 @@ from .forms import UserRegisterForm
 
 # Create your views here.
 
+def home(request):
+    """
+    Renders the landing page / introduction to the Online Judge project.
+    """
+    return render(request, 'home.html')
+
 # Registration View
 def register(request):
     # Send directly to problems page is already authenticated

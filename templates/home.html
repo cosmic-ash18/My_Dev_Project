@@ -1,0 +1,41 @@
+{# templates/home.html #}
+{% extends 'base.html' %}
+
+{% block title %}Welcome to Online Judge{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="card p-4 mb-4">
+        <h1 class="card-title text-center">Welcome to Online Judge</h1>
+        <p class="lead">
+          This is a simple, Django-based online code evaluation platform.  
+          You can browse a list of programming problems, submit your code, and
+          get instant feedback on correctness and performance.
+        </p>
+        <hr>
+        <ul>
+          <li><strong>Browse Problems:</strong> Click “View Problems” below to see all available challenges.</li>
+          <li><strong>Submit Solutions:</strong> Log in (or register) and submit your code for automatic judging.</li>
+          <li><strong>View Results:</strong> After each submission, you’ll see whether it passed all test cases.</li>
+        </ul>
+        <div class="text-center mt-4">
+          {% if user.is_authenticated %}
+            <!-- If the user is already logged in, take them to the problem list -->
+            <a href="{% url 'problems:list' %}" class="btn btn-primary btn-lg">
+              View Problems
+            </a>
+          {% else %}
+            <!-- Otherwise, show a “Get Started” sequence -->
+            <a href="{% url 'register' %}" class="btn btn-success btn-lg me-2">
+              Register
+            </a>
+            <a href="{% url 'login' %}" class="btn btn-outline-primary btn-lg">
+              Log In
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
