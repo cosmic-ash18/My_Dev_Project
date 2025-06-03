@@ -1,6 +1,35 @@
-<h2>Online Compiler</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Run</button>
-</form>
+{% extends 'base.html' %}
+{% block title %}Run Code{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card shadow-sm">
+      <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">Online Compiler</h4>
+      </div>
+      <div class="card-body">
+        <form method="post">
+          {% csrf_token %}
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label for="id_language" class="form-label">Language</label>
+              {{ form.language }}
+            </div>
+            <div class="col-md-12">
+              <label for="id_code" class="form-label">Source Code</label>
+              {{ form.code }}
+            </div>
+            <div class="col-md-12">
+              <label for="id_stdin" class="form-label">Custom Input (stdin)</label>
+              {{ form.stdin }}
+            </div>
+          </div>
+          <div class="text-end mt-3">
+            <button type="submit" class="btn btn-success">Run Code</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

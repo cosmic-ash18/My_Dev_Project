@@ -1,27 +1,41 @@
 {% extends 'base.html' %}
+{% block title %}Submission Results{% endblock %}
 {% block content %}
-<div class="card mt-4">
-  <div class="card-header bg-success text-white">
-    <h4 class="mb-0">Submission Results</h4>
-  </div>
-  <div class="card-body">
-    <p>Passed {{ passed }} of {{ total }} test cases.</p>
-    <table class="table table-striped">
-      <thead>
-        <tr><th>#</th><th>Result</th><th>Your Output</th><th>Expected</th></tr>
-      </thead>
-      <tbody>
-        {% for tc in results %}
-        <tr class="{% if tc.passed %}table-success{% else %}table-danger{% endif %}">
-          <td>{{ forloop.counter }}</td>
-          <td>{{ tc.passed|yesno:"Passed,Failed" }}</td>
-          <td><pre>{{ tc.output }}</pre></td>
-          <td><pre>{{ tc.expected }}</pre></td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    <a href="{% url 'problems:list' %}" class="btn btn-primary mt-3">Back to Problems</a>
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card shadow-sm mb-4">
+      <div class="card-header bg-success text-white">
+        <h4 class="mb-0">Submission Results</h4>
+      </div>
+      <div class="card-body">
+        <p class="mb-3">Passed <strong>{{ passed }}</strong> of <strong>{{ total }}</strong> test cases.</p>
+        <div class="table-responsive">
+          <table class="table table-bordered align-middle">
+            <thead class="table-light">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Status</th>
+                <th scope="col">Your Output</th>
+                <th scope="col">Expected</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for tc in results %}
+              <tr class="{% if tc.passed %}table-success{% else %}table-danger{% endif %}">
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ tc.passed|yesno:"Passed,Failed" }}</td>
+                <td><pre class="mb-0">{{ tc.output }}</pre></td>
+                <td><pre class="mb-0">{{ tc.expected }}</pre></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="text-end mt-3">
+          <a href="{% url 'problems:list' %}" class="btn btn-primary">Back to Problems</a>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}

@@ -1,0 +1,46 @@
+{# templates/suggestions.html #}
+{% extends "base.html" %}
+{% block title %}Code Suggestions{% endblock %}
+
+{% block content %}
+<div class="row">
+  <!-- ORIGINAL CODE PANEL -->
+  <div class="col-lg-6">
+    <div class="card shadow-sm mb-4">
+      <div class="card-header bg-warning text-dark">
+        <h5 class="mb-0">Original Code</h5>
+      </div>
+      <div class="card-body">
+        {# Wrap in <pre><code> and specify the language; adjust “python” if needed #}
+        <pre>
+<code class="language-python">
+{{ original_code|escape }}
+</code>
+        </pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMPROVED CODE PANEL -->
+  <div class="col-lg-6">
+    <div class="card shadow-sm mb-4">
+      <div class="card-header bg-success text-white">
+        <h5 class="mb-0">Code Suggestions from Gemini</h5>
+      </div>
+      <div class="card-body">
+        <pre>
+<code class="language-python">
+{{ improved_code|escape }}
+</code>
+        </pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="text-end">
+  <a href="{% url 'submit:submit_code' problem.id %}" class="btn btn-primary">
+    Back to Problem
+  </a>
+</div>
+{% endblock %}

@@ -1,14 +1,25 @@
 {% extends 'base.html' %}
+{% block title %}Run Output{% endblock %}
 {% block content %}
-<div class="card mt-4">
-  <div class="card-header bg-primary text-white">
-    <h4 class="mb-0">Run Output</h4>
-  </div>
-  <div class="card-body">
-    <pre class="bg-light p-3 border rounded">{{ output }}</pre>
-    <a href="{% url 'submit:submit_code' problem_id %}" class="btn btn-outline-secondary mt-3">
-      Back to Problem
-    </a>
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header bg-info text-white">
+        <h4 class="mb-0">Execution Output</h4>
+      </div>
+      <div class="card-body">
+        <pre class="p-3 rounded">{{ output }}</pre>
+        {% if problem_id %}
+          <div class="text-end mt-3">
+            <a href="{% url 'submit:submit_code' problem_id %}" class="btn btn-outline-secondary">Back to Problem</a>
+          </div>
+        {% else %}
+          <div class="text-end mt-3">
+            <a href="{% url 'compile' %}" class="btn btn-outline-secondary">Back</a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}

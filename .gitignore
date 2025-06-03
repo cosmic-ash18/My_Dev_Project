@@ -19,3 +19,6 @@ db.sqlite3
 codes/
 inputs/
 outputs/
+
+# llm json file
+onlinejudgellm-7d3bee0e1469.json

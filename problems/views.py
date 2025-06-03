@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+# LoginView is the built-in class-based view for handling user logins
 from django.contrib.auth.views import LoginView
+# These are generic class-based iews that let you display lists of objects
+# and details of a single object
 from django.views.generic import ListView, DetailView
 from .models import Problem
 from .forms import UserRegisterForm
@@ -10,6 +13,7 @@ from .forms import UserRegisterForm
 
 # Registration View
 def register(request):
+    # Send directly to problems page is already authenticated
     if request.user.is_authenticated:
         return redirect('problems:list')
     
@@ -38,8 +42,6 @@ class ProblemDetailView(DetailView):
     model = Problem
     template_name = 'problem_detail.html'
 
-
-from django.shortcuts import render
 
 def register_view(request):
     return render(request, "problems/register.html")
