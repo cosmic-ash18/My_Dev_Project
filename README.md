@@ -41,3 +41,5 @@ docker run -d \
   -v /path-to-your-json-key:/app/key.json:ro \
   my_image:latest
 
+```
+Current deployment link: http://3.108.65.217:8000/
