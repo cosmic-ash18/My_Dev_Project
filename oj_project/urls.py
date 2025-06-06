@@ -24,8 +24,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', core_views.home, name='home'),
     path('register/', core_views.register, name='register'),
-    path('login/', core_views.CustomLoginView.as_view(),    name='login'),
+    path('login/', core_views.CustomLoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
-    path('', include(('problems.urls', 'problems'), namespace='problems')),
+
+    # MOUNT the problems app under /problems/
+    path('problems/', include(('problems.urls', 'problems'), namespace='problems')),
+
     path('submit/', include('submit.urls', namespace='submit')),
 ]
