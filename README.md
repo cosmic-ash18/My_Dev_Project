@@ -1,6 +1,6 @@
-# Online Judge + AI Code Assistant
+# Online Judge -> CodeUmpire
 
-This is a full-stack web application that works as an online compiler and judge system with both user inputs and test cases. It also includes AI-based coding assistance using Google Vertex AI.
+This is a full-stack web application in Django that works as an online compiler and judge system with both user inputs and test cases. It also includes AI-based coding assistance using Google Vertex AI.
 
 ---
 
