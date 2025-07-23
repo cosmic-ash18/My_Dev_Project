@@ -15,12 +15,8 @@ This is a full-stack web application in Django that works as an online compiler 
 - AI-Powered Code Assistance  
   Integrated with Google Vertex AI (Gemini API) for code explanations and suggestions.
 
-- Dockerized for Portability  
-  Fully containerized using Docker. Can be run locally or deployed to cloud platforms.
-
 ### Prerequisites
 
-- Docker  (else will have to run it locally)
 - A Google Cloud service account key JSON with access to Vertex AI  
   (See: https://cloud.google.com/docs/authentication/getting-started)
 
@@ -33,13 +29,6 @@ cd My_Dev_Project
 
 # Build the Docker image
 docker build -t oj_image .
-
-# Run the container
-docker run -d \
-  -p 8000:8000 \
-  --name c1 \
-  -v /path-to-your-json-key:/app/key.json:ro \
-  my_image:latest
 
 ```
 Current deployment link: http://3.108.65.217:8000/
